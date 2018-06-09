@@ -24,3 +24,17 @@ class Cell(pygame.sprite.Sprite):
         # 画矩形
         self.rect = self.image.get_rect()
         self.rect.topleft = position
+
+
+def draw():
+    '''画游戏界面'''
+    screen.fill((0, 0, 0))
+    for sp_col in range(pygame.world.shape[1]):
+        for sp_row in range(pygame.world.shape[0]):
+            if pygame.world[sp_row][sp_col]:
+                new_cell = Cell((sp_col * Cell.size, sp_row * Cell.size))
+                screen.blit(new_cell.image, new_cell.rect)
+
+
+if __name__ == "__main__":
+    screen = pygame.display.set_mode((WIDTH * Cell.size, HEIGHT * Cell.size))
