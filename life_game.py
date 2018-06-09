@@ -126,4 +126,21 @@ def mouse_control():
     draw()
 
 
-
+if __name__ == '__main__':
+    '''main函数
+        创建状态机来转换游戏的三种状态
+        初始化界面
+        开始游戏主循环
+    '''
+    state_actions = {
+        'Reset': init,
+        'Stop': stop,
+        'Move': move
+    }
+    state = 'Reset'
+    pygame.init()
+    pygame.display.set_caption('pairCodingGame!')
+    screen = pygame.display.set_mode((WIDTH * Cell.size, HEIGHT * Cell.size))
+    while True:  # 游戏主循环
+        state = state_actions[state]()
+        pygame.display.update()
