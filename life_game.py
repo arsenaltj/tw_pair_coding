@@ -139,7 +139,10 @@ if __name__ == '__main__':
     }
     state = 'Reset'
     pygame.init()
-    pygame.display.set_caption('pairCodingGame!')
+    icon_res = "./twIcon.png"
+    icon = pygame.image.load(icon_res)
+    pygame.display.set_icon(icon)
+    pygame.display.set_caption('ThoughtWorksPairCodingGame!')
     screen = pygame.display.set_mode((WIDTH * Cell.size, HEIGHT * Cell.size))
     while True:  # 游戏主循环
         state = state_actions[state]()
