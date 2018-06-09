@@ -1,21 +1,25 @@
 # Hello ThoughtWorks!
 
-details:{
+## details:
+{
 	用基于python的第三方库pygame完成了“细胞生命”
 }
 
-use:{
+## use:
+{
 	鼠标:输入初始状态和控制状态
-	键盘:{
+	键盘:
+	{
 			"space" : 暂停,
 			"enter" : 开始,
 			"r"     : 重置,
 			"q"     : 减速,
 			"e"     : 加速
-		}
+	}
 }
 
-requirements:{
+## requirements:
+{
 	astroid==1.6.2 
 	autopep8==1.3.4 
 	backports.functools-lru-cache==1.5 
