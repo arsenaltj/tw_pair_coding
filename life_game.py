@@ -57,8 +57,15 @@ def change_state():
 
 
 def judge_cell_state(nbrs_count):
-    # if nbrs_count.any() < 0 or nbrs_count.any() > 8:
-    #    raise Exception("nbrs_count should in range(0,8)", nbrs_count)
+    pygame.world = (nbrs_count == 3) | ((pygame.world == 1) & (nbrs_count == 2)).astype('int')
+
+    return pygame.world
+
+
+def judge_cell_state_exception(nbrs_count):
+    if nbrs_count.any() < 0 or nbrs_count.any() > 8:
+        raise Exception("nbrs_count should in range(0,8)", nbrs_count)
+
     pygame.world = (nbrs_count == 3) | (
         (pygame.world == 1) & (nbrs_count == 2)).astype('int')
 
