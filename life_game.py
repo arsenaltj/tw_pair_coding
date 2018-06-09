@@ -12,6 +12,13 @@ HEIGHT = 40
 CELL_SIZE = 10
 FRAME_RATE = 0.1
 
+# 初始化world和鼠标点击事件
+pygame.world = np.zeros((HEIGHT, WIDTH))
+pygame.button_down = False
+
+# 控制开始时间
+pygame.clock_start = 0
+
 
 class Cell(pygame.sprite.Sprite):
     size = CELL_SIZE
@@ -77,6 +84,36 @@ def stop():
     return 'Stop'
 
 
+def move():
+    '''细胞变化时的状态'''
+    global FRAME_RATE
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == KEYDOWN and event.key == K_SPACE:
+            return 'Stop'
+        if event.type == KEYDOWN and event.key == K_r:
+            return 'Reset'
+        if event.type == MOUSEBUTTONDOWN:
+            pygame.button_down = True
+            pygame.button_type = event.button
+        if event.type == MOUSEBUTTONUP:
+            pygame.button_down = False
+        if pygame.button_down:
+            mouse_control()
+        if event.type == KEYDOWN and event.key == K_q:  # 按键q时帧率变快
+            FRAME_RATE = 2 * FRAME_RATE
+        if event.type == KEYDOWN and event.key == K_e:  # 按键e时帧率变慢
+            FRAME_RATE = FRAME_RATE / 2
+    if time.clock() - pygame.clock_start > FRAME_RATE:
+        change_state()
+        draw()
+        pygame.clock_start = time.clock()
+
+    return 'Move'
+
+
 def mouse_control():
     '''鼠标控制细胞的生命'''
     mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -89,5 +126,4 @@ def mouse_control():
     draw()
 
 
-if __name__ == "__main__":
-    screen = pygame.display.set_mode((WIDTH * Cell.size, HEIGHT * Cell.size))
+
