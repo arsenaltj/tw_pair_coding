@@ -60,6 +60,8 @@ def judge_cell_state(nbrs_count):
     pygame.world = (nbrs_count == 3) | (
         (pygame.world == 1) & (nbrs_count == 2)).astype('int')
 
+    return pygame.world
+
 
 def init():
     '''地图初始化'''
