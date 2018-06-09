@@ -56,5 +56,17 @@ def init():
     return 'Stop'
 
 
+def mouse_control():
+    '''鼠标控制细胞的生命'''
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+    sp_col = mouse_x / Cell.size
+    sp_row = mouse_y / Cell.size
+    if pygame.button_type == 1:  # 鼠标左键，细胞活
+        pygame.world[sp_row][sp_col] = 1
+    elif pygame.button_type == 3:  # 鼠标右键，细胞亡
+        pygame.world[sp_row][sp_col] = 0
+    draw()
+
+
 if __name__ == "__main__":
     screen = pygame.display.set_mode((WIDTH * Cell.size, HEIGHT * Cell.size))
