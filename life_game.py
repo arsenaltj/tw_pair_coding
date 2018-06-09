@@ -49,5 +49,12 @@ def change_state():
         (pygame.world == 1) & (nbrs_count == 2)).astype('int')
 
 
+def init():
+    '''地图初始化'''
+    pygame.world.fill(0)
+    draw()
+    return 'Stop'
+
+
 if __name__ == "__main__":
     screen = pygame.display.set_mode((WIDTH * Cell.size, HEIGHT * Cell.size))
