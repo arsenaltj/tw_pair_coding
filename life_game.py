@@ -56,6 +56,27 @@ def init():
     return 'Stop'
 
 
+def stop():
+    '''停止时的状态'''
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == KEYDOWN and event.key == K_RETURN:
+            return 'Move'
+        if event.type == KEYDOWN and event.key == K_r:
+            return 'Reset'
+        if event.type == MOUSEBUTTONDOWN:
+            pygame.button_down = True
+            pygame.button_type = event.button
+        if event.type == MOUSEBUTTONUP:
+            pygame.button_down = False
+        if pygame.button_down:
+            mouse_control()
+
+    return 'Stop'
+
+
 def mouse_control():
     '''鼠标控制细胞的生命'''
     mouse_x, mouse_y = pygame.mouse.get_pos()
