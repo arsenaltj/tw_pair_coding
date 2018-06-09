@@ -51,7 +51,12 @@ def change_state():
     nbrs_count = sum(np.roll(np.roll(pygame.world, i, 0), j, 1)
                      for i in (-1, 0, 1) for j in (-1, 0, 1)
                      if (i != 0 or j != 0))
+    judge_cell_state(nbrs_count)
+    # pygame.world = (nbrs_count == 3) | (
+    #   (pygame.world == 1) & (nbrs_count == 2)).astype('int')
 
+
+def judge_cell_state(nbrs_count):
     pygame.world = (nbrs_count == 3) | (
         (pygame.world == 1) & (nbrs_count == 2)).astype('int')
 
