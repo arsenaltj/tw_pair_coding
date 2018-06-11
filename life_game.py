@@ -4,12 +4,36 @@ import sys
 import time
 import numpy as np
 from pygame.locals import *
-
 # 矩阵宽，高
-WIDTH = 80
-HEIGHT = 40
-# 细胞大小，动画帧率
+WIDTH = 160
+HEIGHT = 80
+# 细胞大小
 CELL_SIZE = 10
+
+if len(sys.argv) < 5:
+    print '''this game need 3 argv
+                1:window width (100)
+                2:windows height (50)
+                3:cell size (10)
+                so we run defualt
+                '''
+    WIDTH = 160
+    HEIGHT = 80
+    CELL_SIZE = 10
+else:
+    WIDTH = int(sys.argv[1])
+    HEIGHT = int(sys.argv[2])
+    CELL_SIZE = int(sys.argv[3])
+# cell颜色
+WHITE = (255, 255, 255)
+BLUE = (0, 255, 255)
+YELLOW = (255, 255, 0)
+C1 = (255, 0, 255)
+C2 = (255, 0, 0)
+C3 = (0, 255, 0)
+C4 = (0, 0, 255)
+COLOR = WHITE
+# 动画帧率
 FRAME_RATE = 0.1
 
 # 初始化world和鼠标点击事件
@@ -27,7 +51,7 @@ class Cell(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface([self.size, self.size])
         # 填白色
-        self.image.fill((255, 255, 255))
+        self.image.fill(COLOR)
         # 画矩形
         self.rect = self.image.get_rect()
         self.rect.topleft = position
@@ -51,13 +75,18 @@ def change_state():
     nbrs_count = sum(np.roll(np.roll(pygame.world, i, 0), j, 1)
                      for i in (-1, 0, 1) for j in (-1, 0, 1)
                      if (i != 0 or j != 0))
+    # for i in (-1, 0 ,1):
+    #    for j in (-1, 0 ,1):
+    #        if(i != 0 or j != 0):
+    #            nbrs_count = sum(np.roll(np.roll(pygame.world, i, 0), j, 1))
     judge_cell_state(nbrs_count)
     # pygame.world = (nbrs_count == 3) | (
     #   (pygame.world == 1) & (nbrs_count == 2)).astype('int')
 
 
 def judge_cell_state(nbrs_count):
-    pygame.world = (nbrs_count == 3) | ((pygame.world == 1) & (nbrs_count == 2)).astype('int')
+    pygame.world = (nbrs_count == 3) | (
+        (pygame.world == 1) & (nbrs_count == 2)).astype('int')
 
     return pygame.world
 
@@ -103,6 +132,7 @@ def stop():
 def move():
     '''细胞变化时的状态'''
     global FRAME_RATE
+    global COLOR
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -122,12 +152,32 @@ def move():
             FRAME_RATE = 2 * FRAME_RATE
         if event.type == KEYDOWN and event.key == K_e:  # 按键e时帧率变慢
             FRAME_RATE = FRAME_RATE / 2
+        if event.type == KEYDOWN and event.key == K_z:  # 按键z时变蓝色
+            COLOR = BLUE
+        if event.type == KEYDOWN and event.key == K_x:  # 按键x时变黄色
+            COLOR = YELLOW
+        if event.type == KEYDOWN and event.key == K_c:  # 按键c时变白色
+            COLOR = WHITE
+        if event.type == KEYDOWN and event.key == K_v:  # 按键v时变蓝色
+            COLOR = C1
+        if event.type == KEYDOWN and event.key == K_b:  # 按键b时变黄色
+            COLOR = C2
+        if event.type == KEYDOWN and event.key == K_n:  # 按键n时变白色
+            COLOR = C3
+        if event.type == KEYDOWN and event.key == K_m:  # 按键m时变白色
+            COLOR = C4
     if time.clock() - pygame.clock_start > FRAME_RATE:
         change_state()
         draw()
         pygame.clock_start = time.clock()
 
     return 'Move'
+
+
+def color_change():
+    dict_color = {
+        K_z: YELLOW
+    }
 
 
 def mouse_control():
