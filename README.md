@@ -8,13 +8,19 @@
 
 ## use:{
 ###	
-	装依赖库:pip install -r requirements.txt 
+	装依赖库:
+		pip install -r requirements.txt 
 ###
-	python2 运行:py -2 life_game.py
+	python2 运行:
+		py -2 life_game.py
 ###	
-	鼠标:输入初始状态和控制状态
+	鼠标:
+		输入初始状态和控制状态
+		左键加细胞
+		右键减细胞
 ###
-	键盘:{
+	键盘:
+		{
 			"space" : 暂停,
 			"enter" : 开始,
 			"r"     : 重置,
@@ -24,7 +30,8 @@
 		}
 ## }
 
-## requirements:{
+## requirements:
+{
 
 	astroid==1.6.2 
 	autopep8==1.3.4 
@@ -50,5 +57,5 @@
 	six==1.11.0 
 	wrapt==1.10.11 
 
-## }
+ }
 
